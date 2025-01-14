@@ -77,7 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 229.5
   },
   "right": {
     "id": "d176dfc2b2a747a6",
@@ -150,7 +150,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 443.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -162,7 +162,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "8a2d54bc4ebdafe5",
+  "active": "a304cdc1912d47af",
   "lastOpenFiles": [
     "3. eROSITA simulations.md",
     "4. M7 on eROSITA.md",
