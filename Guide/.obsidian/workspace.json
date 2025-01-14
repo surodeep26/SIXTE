@@ -1,0 +1,172 @@
+{
+  "main": {
+    "id": "8f5ea6ace2541787",
+    "type": "split",
+    "children": [
+      {
+        "id": "f0c4f9fb174b3cb6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8a2d54bc4ebdafe5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "4. M7 on eROSITA.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "4. M7 on eROSITA"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "702ae405ba2bf7e7",
+    "type": "split",
+    "children": [
+      {
+        "id": "677569d08b25402e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b7cc55be97f3b7e7",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "File explorer"
+            }
+          },
+          {
+            "id": "6af8fb4606296eb9",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "02fe5b0cdf033ac0",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "d176dfc2b2a747a6",
+    "type": "split",
+    "children": [
+      {
+        "id": "b5dc9c73236383e0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "dd31ad332a09afc4",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "4. M7 on eROSITA.md",
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for 4. M7 on eROSITA"
+            }
+          },
+          {
+            "id": "b990dc163fc1d18a",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "4. M7 on eROSITA.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from 4. M7 on eROSITA"
+            }
+          },
+          {
+            "id": "e396935d197eff9f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "a304cdc1912d47af",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "4. M7 on eROSITA.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of 4. M7 on eROSITA"
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "8a2d54bc4ebdafe5",
+  "lastOpenFiles": [
+    "3. eROSITA simulations.md",
+    "4. M7 on eROSITA.md",
+    "2. More Simulations.md",
+    "1. Quick Start.md"
+  ]
+}
