@@ -2,6 +2,9 @@ import os
 import subprocess
 from xspec import *
 from astropy.io import fits
+import glob
+from astropy.coordinates import Angle
+from astropy import units as u
 
 
 def create_model(self, exprString:str, setPars:dict=None, frozen=None, save=None):
@@ -26,11 +29,13 @@ def create_model(self, exprString:str, setPars:dict=None, frozen=None, save=None
 class SIMPUT: 
     def __init__(self, XSPECFile, Simput, 
                 Src_Name=None, 
-                ra=0, 
-                dec=0, 
+                RA=0, 
+                Dec=0, 
                 srcFlux=2e-11,
-                Elow=0.1,
-                Eup=10,
+                # Elow=0.1,
+                Elow=0.2,
+                # Eup=10,
+                Eup=2,
                 Nbins=1000,
                 logEgrid="yes",
                 Emin=0.2,
@@ -41,8 +46,8 @@ class SIMPUT:
         
         # optional default
         self.Src_Name = Src_Name
-        self.ra = ra
-        self.dec = dec
+        self.RA = RA
+        self.Dec = Dec
         self.srcFlux = srcFlux
         self.Elow = Elow
         self.Eup = Eup
@@ -55,8 +60,8 @@ class SIMPUT:
             f"simputfile",
             f"Simput={self.Simput}",
             f"Src_Name={self.Src_Name}",
-            f"RA={self.ra}",
-            f"Dec={self.dec}",
+            f"RA={self.RA}",
+            f"Dec={self.Dec}",
             f"srcFlux={self.srcFlux}",
             f"Elow={self.Elow}",
             f"Eup={self.Eup}",
@@ -79,19 +84,19 @@ class SIXTE:
                 Exposure,
                 XMLFile:str=None, 
                 MJDREF=51543.8975,
-                ra=0, 
-                dec=0):
+                RA=0, 
+                Dec=0):
         # required
         self.Prefix = Prefix #output SIMPUT file
         self.Simput = Simput #output SIMPUT file
         self.Exposure = Exposure
         # optional default
-        xmldir = "/home/suro/SIXTE/installation/share/sixte/instruments/srg/erosita"
+        self.xmldir = "/home/suro/SIXTE/installation/share/sixte/instruments/srg/erosita"
         self.XMLFile = XMLFile
         if not XMLFile:
-            self.XMLFile = f"{xmldir}/erosita_1.xml,{xmldir}/erosita_2.xml,{xmldir}/erosita_3.xml,{xmldir}/erosita_4.xml,{xmldir}/erosita_5.xml,{xmldir}/erosita_6.xml,{xmldir}/erosita_7.xml" # telescope
-        self.ra = ra
-        self.dec = dec
+            self.XMLFile = f"{self.xmldir}/erosita_1.xml,{self.xmldir}/erosita_2.xml,{self.xmldir}/erosita_3.xml,{self.xmldir}/erosita_4.xml,{self.xmldir}/erosita_5.xml,{self.xmldir}/erosita_6.xml,{self.xmldir}/erosita_7.xml" # telescope
+        self.RA = RA
+        self.Dec = Dec
         self.MJDREF=MJDREF
         self.EvtFile="evt.fits"
     def generate(self):
@@ -101,8 +106,8 @@ class SIXTE:
             f"Simput={self.Simput}",
             f"XMLFile={self.XMLFile}",
             f"MJDREF={self.MJDREF}",
-            f"RA={self.ra}",
-            f"Dec={self.dec}",
+            f"RA={self.RA}",
+            f"Dec={self.Dec}",
             f"Exposure={self.Exposure}",
             f"EvtFile={self.EvtFile}",
             f"clobber=yes",
@@ -113,9 +118,17 @@ class SIXTE:
         except subprocess.CalledProcessError as e:
             print(f"Error creating SIXTE event file: {e}")
 
-class generateSIXTE:
-    def __init__(self, name):
+class Simulation:
+    def __init__(self, name, RA=0, Dec=0, srcFlux=2e-11, Exposure=1000):
         self.name = name
+        self.RA = RA
+        self.Dec = Dec
+        self.srcFlux = srcFlux
+        self.Exposure = Exposure
+        self.SIMPUT = f"{self.name}/SIMPUT_{self.name}"
+        self.SIXTE = f"{self.name}/products/{self.name}_evt.fits"
+        self.xmldir = "/home/suro/SIXTE/installation/share/sixte/instruments/srg/erosita"
+        
         if not os.path.exists(self.name):
             os.makedirs(os.path.join(self.name, 'products'))
     def generate_model(self, exprString="tbabs*bbodyrad",setPars=None):
@@ -123,23 +136,83 @@ class generateSIXTE:
                      setPars=setPars,
                      save=f"{self.name}/Model_{exprString.replace("*","_")}")
         self.model_file = f"{self.name}/Model_{exprString.replace("*","_")}"
+        # self.model_file = glob.glob(f"{self.name}/Model*")[0]
+        
     def generate_SIMPUT(self):
         simput_seed = SIMPUT(XSPECFile=self.model_file,
-                             Simput=f"{self.name}/SIMPUT_{self.name}")
+                             Simput=f"{self.name}/SIMPUT_{self.name}",
+                             RA=self.RA,
+                             Dec=self.Dec,
+                             srcFlux=self.srcFlux)
         simput_seed.generate()
-        self.SIMPUT = f"{self.name}/SIMPUT_{self.name}"
         with fits.open(self.SIMPUT) as f:
             self.SIMPUT_fits = f
     def generate_evts(self):
-        sixte_seed = SIXTE(Prefix=self.name, Simput=self.SIMPUT, Exposure=1000)
+        sixte_seed = SIXTE(Prefix=self.name, Simput=self.SIMPUT, Exposure=self.Exposure)
         sixte_seed.generate()
-        self.SIXTE = f"{self.name}/{self.name}_evt.fits"
-        with fits.open(self.SIXTE) as f:
-            self.event_file = f
-        pass
-        
+        merge_cmd = [
+            f"ftmerge",
+        ]
+        merge_cmd.append(','.join(glob.glob("*.fits")))
+        merge_cmd.append(f"{self.name}_evt.fits")
+        merge_cmd.append("clobber=yes")
+        subprocess.run(merge_cmd, check=True)
+        subprocess.run(rf"mv {self.name}_*.fits {self.name}/products/", shell=True)
+        # with fits.open(self.SIXTE) as f:
+        #     self.event_file = f
+        # pass
+    
+    def generate_image(self):
+        cmd = [
+            "imgev",
+            f"EvtFile={self.SIXTE}",
+            f"Image={self.name}/products/Image_{self.name}.fits",
+            "CoordinateSystem=0",
+            "Projection=TAN",
+            "CUNIT1=deg",
+            "CUNIT2=deg",
+            "NAXIS1=384",
+            "NAXIS2=384",
+            "CRVAL1=0.0",
+            "CRVAL2=0.0",
+            "CDELT1=-0.0027778",
+            "CDELT2=0.00277778",
+            "CRPIX1=192.5",
+            "CRPIX2=192.5",
+            "clobber=yes"
+        ]
+        subprocess.run(cmd, check=True)
 
-s = generateSIXTE('rxj1856')
-s.generate_model(exprString="tbabs*bbodyrad", setPars=(12,24,36))
+    def generate_spec(self):
+        def coordinate_range_string(ra, dec, tolerance):
+            # Convert inputs to Angle objects
+            ra_angle = Angle(ra * u.deg).wrap_at(360 * u.deg)
+            dec_angle = Angle(dec * u.deg)
+
+            # Define the RA and Dec bounds
+            ra_min = (ra_angle - tolerance * u.deg).wrap_at(360 * u.deg)
+            ra_max = (ra_angle + tolerance * u.deg).wrap_at(360 * u.deg)
+            dec_min = dec_angle - tolerance * u.deg
+            dec_max = dec_angle + tolerance * u.deg
+
+            # Construct the string
+            return (
+                f"(RA>{ra_min.degree:.2f} || RA<{ra_max.degree:.2f}) && "
+                f"Dec>{dec_min.degree:.2f} && Dec<+{dec_max.degree:.2f}"
+            )
+        cmd = [
+            "makespec",
+            f"EvtFile={self.SIXTE}",
+            f"Spectrum={self.name}/products/Spectrum_{self.name}.pha",
+            f'EventFilter={coordinate_range_string(self.RA,self.Dec,0.05)}', #check .reg file usage in manual
+            f"RSPPath={self.xmldir}",
+            "clobber=yes"
+        ]
+        subprocess.run(cmd, check=True)
+        
+s = Simulation('rxj1856_10k',Exposure=10_000)
+s.generate_model(exprString="tbabs*bbodyrad", setPars=(5e-3,60e-3,1))
 s.generate_SIMPUT()
 s.generate_evts()
+s.generate_image()
+s.generate_spec()
