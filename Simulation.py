@@ -125,7 +125,7 @@ class Simulation:
         self.Dec = Dec
         self.srcFlux = srcFlux
         self.Exposure = Exposure
-        self.SIMPUT = f"{self.name}/SIMPUT_{self.name}"
+        self.SIMPUT = f"{self.name}/SIMPUT_{self.name}.fits"
         self.SIXTE = f"{self.name}/products/{self.name}_evt.fits"
         self.xmldir = "/home/suro/SIXTE/installation/share/sixte/instruments/srg/erosita"
         
@@ -140,13 +140,13 @@ class Simulation:
         
     def generate_SIMPUT(self):
         simput_seed = SIMPUT(XSPECFile=self.model_file,
-                             Simput=f"{self.name}/SIMPUT_{self.name}",
+                             Simput=f"{self.name}/SIMPUT_{self.name}.fits",
                              RA=self.RA,
                              Dec=self.Dec,
                              srcFlux=self.srcFlux)
         simput_seed.generate()
-        with fits.open(self.SIMPUT) as f:
-            self.SIMPUT_fits = f
+        # with fits.open(self.SIMPUT) as f:
+        #     self.SIMPUT_fits = f
     def generate_evts(self):
         sixte_seed = SIXTE(Prefix=self.name, Simput=self.SIMPUT, Exposure=self.Exposure)
         sixte_seed.generate()
@@ -203,15 +203,15 @@ class Simulation:
         cmd = [
             "makespec",
             f"EvtFile={self.SIXTE}",
-            f"Spectrum={self.name}/products/Spectrum_{self.name}.pha",
+            f"Spectrum={self.name}/spectrum_{self.name}.pha",
             f'EventFilter={coordinate_range_string(self.RA,self.Dec,0.05)}', #check .reg file usage in manual
             f"RSPPath={self.xmldir}",
             "clobber=yes"
         ]
         subprocess.run(cmd, check=True)
         
-s = Simulation('rxj1856_10k',Exposure=10_000)
-s.generate_model(exprString="tbabs*bbodyrad", setPars=(5e-3,60e-3,1))
+s = Simulation('rxj1856_100k',Exposure=100_000)
+s.generate_model(exprString="tbabs*bbodyrad", setPars=(5e-3,60e-3))
 s.generate_SIMPUT()
 s.generate_evts()
 s.generate_image()
