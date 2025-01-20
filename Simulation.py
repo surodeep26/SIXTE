@@ -210,9 +210,11 @@ class Simulation:
         ]
         subprocess.run(cmd, check=True)
         
-s = Simulation('rxj1856_5k',Exposure=5_000)
-s.generate_model(exprString="tbabs*bbodyrad", setPars=(5e-3,60e-3))
+s = Simulation('ns_200k',Exposure=200_000)
+s.generate_model(exprString="tbabs*bbodyrad", setPars=(1e-2,60e-3,1e5))
 s.generate_SIMPUT()
 s.generate_evts()
 s.generate_image()
 s.generate_spec()
+
+
