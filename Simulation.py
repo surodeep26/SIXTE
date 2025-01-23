@@ -121,16 +121,17 @@ class SIXTE:
 class Simulation:
     def __init__(self, name, RA=0, Dec=0, srcFlux=2e-11, Exposure=1000):
         self.name = name
+        self.name = name+"exp"+str(Exposure)
         self.RA = RA
         self.Dec = Dec
         self.srcFlux = srcFlux
         self.Exposure = Exposure
         self.SIMPUT = f"{self.name}/SIMPUT_{self.name}.fits"
-        self.SIXTE = f"{self.name}/products/{self.name}_evt.fits"
+        self.SIXTE = f"{self.name}/event_files/{self.name}_evt.fits"
         self.xmldir = "/home/suro/SIXTE/installation/share/sixte/instruments/srg/erosita"
         
         if not os.path.exists(self.name):
-            os.makedirs(os.path.join(self.name, 'products'))
+            os.makedirs(os.path.join(self.name, 'event_files'))
     def generate_model(self, exprString="tbabs*bbodyrad",setPars=None):
         create_model(self, exprString=exprString, 
                      setPars=setPars,
@@ -157,7 +158,7 @@ class Simulation:
         merge_cmd.append(f"{self.name}_evt.fits")
         merge_cmd.append("clobber=yes")
         subprocess.run(merge_cmd, check=True)
-        subprocess.run(rf"mv {self.name}_*.fits {self.name}/products/", shell=True)
+        subprocess.run(rf"mv {self.name}_*.fits {self.name}/event_files/", shell=True)
         # with fits.open(self.SIXTE) as f:
         #     self.event_file = f
         # pass
@@ -166,7 +167,7 @@ class Simulation:
         cmd = [
             "imgev",
             f"EvtFile={self.SIXTE}",
-            f"Image={self.name}/products/Image_{self.name}.fits",
+            f"Image={self.name}/Image_{self.name}.fits",
             "CoordinateSystem=0",
             "Projection=TAN",
             "CUNIT1=deg",
@@ -209,8 +210,11 @@ class Simulation:
             "clobber=yes"
         ]
         subprocess.run(cmd, check=True)
-        
-s = Simulation('ns_200k',Exposure=200_000)
+
+#run the simulation
+from astropy.time import Time
+current_time_iso = Time.now().strftime("%d_%H_%M_%S")
+s = Simulation(f'sim_{current_time_iso}',Exposure=1_000)
 s.generate_model(exprString="tbabs*bbodyrad", setPars=(1e-2,60e-3,1e5))
 s.generate_SIMPUT()
 s.generate_evts()
