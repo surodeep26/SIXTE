@@ -1,3 +1,0 @@
-from xspec import *
-
-# def 
