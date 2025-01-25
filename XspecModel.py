@@ -1,7 +1,7 @@
 from xspec import *
 from astropy.table import Table
 
-def model_params(m:Model):
+def parameters(m:Model):
     component_dict = {}
     for component in m.componentNames:
         component_obj = getattr(m, component)
@@ -19,7 +19,7 @@ def model_params(m:Model):
                 'component_index': i + 1,
                 'component': component,
                 'parameter': param_name,
-                'val': param_values[0],
+                'value': param_values[0],
                 'step': param_values[1],
                 'Elow': param_values[2],
                 'Emin': param_values[3],
@@ -28,11 +28,11 @@ def model_params(m:Model):
             }
             data.append(row_data)
     # Create the Astropy Table
-    model_params = Table(rows=data, names=('component_index', 'component', 'parameter', 'val', 'step', 'Elow', 'Emin', 'Emax', 'Eup'))
-    return model_params
+    parameters = Table(rows=data, names=('component_index', 'component', 'parameter', 'value', 'step', 'Elow', 'Emin', 'Emax', 'Eup'))
+    return parameters
 
-def model_params_pd(m:Model):
-    return model_params(m).to_pandas()
+def parameters_pd(m:Model):
+    return parameters(m).to_pandas()
 
 def save_model(m:Model, fileName=None):
      if not fileName:
@@ -45,23 +45,22 @@ def load_model(path):
     model = AllModels(1)
     return model
 
-class XspecModel:
-    Xset.abund = 'wilm'
-    def __init__(self, exprString, **kwargs):
-        m = Model(exprString, **kwargs)
-        self.exprString = exprString
-        self.expression = m.expression
-        self.model_params = model_params(m)
-        self.model_params_pd = model_params_pd(m)
-        self.Model = m
-        return
-    def save(self, fileName=None):
-        save_model(self.Model, fileName=fileName)
+# class XspecModel:
+#     Xset.abund = 'wilm'
+#     def __init__(self, exprString, **kwargs):
+#         m = Model(exprString, **kwargs)
+#         self.exprString = exprString
+#         self.expression = m.expression
+#         self.parameters = parameters(m)
+#         self.parameters_pd = parameters_pd(m)
+#         self.Model = m
+#         return
+#     def save(self, fileName=None):
+#         save_model(self.Model, fileName=fileName)
     
-    def load(self, path):
-        self.Model = load_model(path)
+#     def load(self, path):
+#         self.Model = load_model(path)
         
-    
 
         
         
