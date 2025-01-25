@@ -159,10 +159,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "3. eROSITA simulations.md"
+                "file": "4. M7 on eROSITA.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of 3. eROSITA simulations"
+              "title": "Outline of 4. M7 on eROSITA"
             }
           }
         ],
@@ -182,11 +182,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "8a2d54bc4ebdafe5",
+  "active": "470cdbd9e17b5d2a",
   "lastOpenFiles": [
+    "3. eROSITA simulations.md",
     "2. More Simulations.md",
     "4. M7 on eROSITA.md",
-    "3. eROSITA simulations.md",
     "1. Quick Start.md",
     "2025-01-14.md"
   ]
