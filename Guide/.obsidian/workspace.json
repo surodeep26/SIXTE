@@ -33,12 +33,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "4. M7 on eROSITA.md",
+                "file": "1. Quick Start.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "4. M7 on eROSITA"
+              "title": "1. Quick Start"
             }
           }
         ]
@@ -159,10 +159,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "4. M7 on eROSITA.md"
+                "file": "1. Quick Start.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of 4. M7 on eROSITA"
+              "title": "Outline of 1. Quick Start"
             }
           }
         ],
@@ -184,9 +184,10 @@
   },
   "active": "470cdbd9e17b5d2a",
   "lastOpenFiles": [
+    "0. Installation Guide.md",
+    "4. M7 on eROSITA.md",
     "3. eROSITA simulations.md",
     "2. More Simulations.md",
-    "4. M7 on eROSITA.md",
     "1. Quick Start.md",
     "2025-01-14.md"
   ]
