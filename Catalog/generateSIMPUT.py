@@ -10,11 +10,11 @@ import os
 n_rows = 10
 
 # Generate random values for RA and Dec within realistic ranges
-ra_values = np.random.uniform(350, 360, n_rows).astype(np.float32)  # Right Ascension in degrees
-dec_values = np.random.uniform(85, 90, n_rows).astype(np.float32)  # Declination in degrees
+ra_values = np.random.uniform(350, 351, n_rows).astype(np.float32)  # Right Ascension in degrees
+dec_values = np.random.uniform(85, 86, n_rows).astype(np.float32)  # Declination in degrees
 
 # Generate random flux values (arbitrary positive values)
-flux_values = np.random.uniform(1e-15, 1e-10, n_rows).astype(np.float32)
+flux_values = np.random.uniform(1e-11, 1e-10, n_rows).astype(np.float32)
 
 # Generate random model names (choosing from a few predefined models)
 model_names = np.random.choice(os.listdir("model_collection"), n_rows)

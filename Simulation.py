@@ -119,14 +119,16 @@ class SIXTE:
             print(f"Error creating SIXTE event file: {e}")
 
 class Simulation:
-    def __init__(self, name, RA=0, Dec=0, srcFlux=2e-11, Exposure=1000):
+    def __init__(self, name, RA=0, Dec=0, srcFlux=2e-11, Exposure=1000, Simput=None):
         self.name = name
         self.name = name+"exp"+str(Exposure)
         self.RA = RA
         self.Dec = Dec
         self.srcFlux = srcFlux
         self.Exposure = Exposure
-        self.SIMPUT = f"{self.name}/SIMPUT_{self.name}.fits"
+        self.SIMPUT = Simput
+        if Simput is None:
+            self.SIMPUT = f"{self.name}/SIMPUT_{self.name}.fits"
         self.SIXTE = f"{self.name}/event_files/{self.name}_evt.fits"
         self.xmldir = "/home/suro/SIXTE/installation/share/sixte/instruments/srg/erosita"
         
@@ -149,7 +151,7 @@ class Simulation:
         # with fits.open(self.SIMPUT) as f:
         #     self.SIMPUT_fits = f
     def generate_evts(self):
-        sixte_seed = SIXTE(Prefix=self.name, Simput=self.SIMPUT, Exposure=self.Exposure)
+        sixte_seed = SIXTE(Prefix=self.name, Simput=self.SIMPUT, Exposure=self.Exposure, RA=self.RA, Dec=self.Dec)
         sixte_seed.generate()
         merge_cmd = [
             f"ftmerge",
@@ -174,8 +176,8 @@ class Simulation:
             "CUNIT2=deg",
             "NAXIS1=384",
             "NAXIS2=384",
-            "CRVAL1=0.0",
-            "CRVAL2=0.0",
+            f"CRVAL1={self.RA}", # RA of telescope pointing
+            f"CRVAL2={self.Dec}", # RA of telescope pointing
             "CDELT1=-0.0027778",
             "CDELT2=0.00277778",
             "CRPIX1=192.5",
@@ -214,9 +216,10 @@ class Simulation:
 #run the simulation
 from astropy.time import Time
 current_time_iso = Time.now().strftime("%d_%H_%M_%S")
-s = Simulation(f'sim_{current_time_iso}',Exposure=1_000)
-s.generate_model(exprString="tbabs*bbodyrad", setPars=(1e-2,60e-3,1e5))
-s.generate_SIMPUT()
+s = Simulation(f'sim_{current_time_iso}',Exposure=1_000, RA=350.5, Dec=85.5, Simput="Catalog/src_merged.fits")
+# s = Simulation("sim_25_21_30_55",Exposure=1_000, RA=357, Dec=88, Simput="Catalog/src_merged.fits")
+# s.generate_model(exprString="tbabs*bbodyrad", setPars=(1e-2,60e-3,1e5))
+# s.generate_SIMPUT()
 s.generate_evts()
 s.generate_image()
 s.generate_spec()
