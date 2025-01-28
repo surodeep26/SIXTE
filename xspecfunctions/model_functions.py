@@ -45,21 +45,6 @@ def load_model(path):
     model = AllModels(1)
     return model
 
-# class XspecModel:
-#     Xset.abund = 'wilm'
-#     def __init__(self, exprString, **kwargs):
-#         m = Model(exprString, **kwargs)
-#         self.exprString = exprString
-#         self.expression = m.expression
-#         self.parameters = parameters(m)
-#         self.parameters_pd = parameters_pd(m)
-#         self.Model = m
-#         return
-#     def save(self, fileName=None):
-#         save_model(self.Model, fileName=fileName)
-    
-#     def load(self, path):
-#         self.Model = load_model(path)
         
 
         
