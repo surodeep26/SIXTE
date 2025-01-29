@@ -216,10 +216,10 @@ class Simulation:
 #run the simulation
 from astropy.time import Time
 current_time_iso = Time.now().strftime("%d_%H_%M_%S")
-s = Simulation(f'sim_{current_time_iso}',Exposure=1_000, RA=350.5, Dec=85.5, Simput="Catalog/src_merged.fits")
-# s = Simulation("sim_25_21_30_55",Exposure=1_000, RA=357, Dec=88, Simput="Catalog/src_merged.fits")
-# s.generate_model(exprString="tbabs*bbodyrad", setPars=(1e-2,60e-3,1e5))
-# s.generate_SIMPUT()
+# s = Simulation(f'sim_{current_time_iso}',Exposure=1_000, RA=350.5, Dec=85.5, Simput="Catalog/src_merged.fits")
+s = Simulation(f'sim_{current_time_iso}',Exposure=1_000, RA=357, Dec=88, Simput="Catalog/src_merged.fits")
+s.generate_model( exprString="tbabs*bbodyrad", setPars=(1e-2,60e-3,1e5))
+s.generate_SIMPUT()
 s.generate_evts()
 s.generate_image()
 s.generate_spec()
