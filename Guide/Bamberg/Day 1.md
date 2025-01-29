@@ -12,3 +12,13 @@ Some notes
 - [ ] background PHA
 	- [ ] the sky backgrounds need to be given as a SIMPUT
 	- [ ] the instrumental background is taken care of by SIXTE
+
+
+# multispec
+this takes a map of parameter distribution.
+
+
+# todo
+- [ ] create the simput file directly without simputools
+- [ ] create only some models and reference them to make the simput.
+- [ ] 

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Intro/0. Installation Guide.md",
+                "file": "Bamberg/Day 1.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "0. Installation Guide"
+              "title": "Day 1"
             }
           },
           {
@@ -67,18 +67,15 @@
             "id": "09cff02f029d70e4",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "Intro/4. M7 on eROSITA.md",
-                "mode": "source",
-                "source": false
+                "file": "Intro/SIXTE_manual.pdf"
               },
-              "icon": "lucide-file",
-              "title": "4. M7 on eROSITA"
+              "icon": "lucide-file-text",
+              "title": "SIXTE_manual"
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -196,10 +193,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Intro/4. M7 on eROSITA.md"
+                "file": "Bamberg/Day 1.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of 4. M7 on eROSITA"
+              "title": "Outline of Day 1"
             }
           }
         ],
@@ -219,15 +216,16 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "09cff02f029d70e4",
+  "active": "8a2d54bc4ebdafe5",
   "lastOpenFiles": [
-    "Bamberg/Day 1.md",
     "Bamberg/Goals.md",
+    "Intro/0. Installation Guide.md",
+    "Intro/SIXTE_manual.pdf",
+    "Bamberg/Day 1.md",
+    "Intro/4. M7 on eROSITA.md",
     "Bamberg/Structure.md",
     "Intro/2. More Simulations.md",
     "Intro/1. Quick Start.md",
-    "Intro/0. Installation Guide.md",
-    "Intro/4. M7 on eROSITA.md",
     "Intro",
     "Bamberg",
     "Intro/3. eROSITA simulations.md",
