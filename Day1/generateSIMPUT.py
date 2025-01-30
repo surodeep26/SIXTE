@@ -4,11 +4,11 @@ import os
 from xspec import *
 
 # Number of sources in the table
-n_rows = 100
+n_rows = 1000
 
 # Generate random values for RA and Dec within realistic ranges
-ra_values = np.random.uniform(340, 351, n_rows).astype(np.float32)  # Right Ascension in degrees
-dec_values = np.random.uniform(85, 88, n_rows).astype(np.float32)  # Declination in degrees
+ra_values = np.random.uniform(0, 360, n_rows).astype(np.float32)  # Right Ascension in degrees
+dec_values = np.random.uniform(-90, 90, n_rows).astype(np.float32)  # Declination in degrees
 
 # Generate random flux values
 flux_values = np.random.uniform(1e-13, 1e-12, n_rows).astype(np.float32)
