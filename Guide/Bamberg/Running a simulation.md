@@ -26,7 +26,9 @@ module load sixte/3.0.7
 nano run_sim_allsky.sl
 nano subs_erosim.sl
 ```
-these are files written in slang, a programming language. 
+these are `.sl` files written in slang
+- `run_sim_allsky.sl` needs to be modified for a simulation
+- `subs_erosim.sl` contains the email, attitude file location
 # 5. Run isis to configure the directories and job submission
 
 ```shell
@@ -37,7 +39,7 @@ this sets up the directory structure with folders like `evt` ,  `log`, `sh` whic
 
 # 6. Then run the simulation
 ```shell
-sbatch run_sim_allsky-sl
+sbatch run_sim_allsky.sl
 ```
 
 # 7.  Check on the processes
