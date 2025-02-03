@@ -35,12 +35,21 @@ these are `.sl` files written in slang
 isis ./run_sim_allsky.sl
 ```
 
-this sets up the directory structure with folders like `evt` ,  `log`, `sh` which will be populated during the simulation.
+this sets up the directory structure by creating:
+`evt` : to store the event file created
+
+`log` : to log the output of the code for debugging 
+
+`sh` : makes the shell scripts that will be run
+
+
+which will be populated during the simulation.
 
 # 6. Then run the simulation
 ```shell
 sbatch run_sim_allsky.sl
 ```
+this will run the main simulation. can take a long time depending on the simput sources.
 
 # 7.  Check on the processes
 ```shell
